@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
-
+<div class="container">
 <div class="row">
 
 	{% for i in prod %}
@@ -21,6 +21,7 @@
 					<span class="item_price">₹{{i.price}}</span>
 					<del>₹{{i.price}}</del>
 				</div>
+				{% if i.stock > 0 %}
 				<div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
 					<form action="#" method="post">
 						<fieldset>
@@ -37,12 +38,18 @@
 						</fieldset>
 					</form>
 				</div>
+				{% else %}
+					<h5 style="color:red">Out of Stock</h5>
+				{% endif %}
 			</div>
+
 		</div>
+
 	</div>
 	{% endfor %}
 
 
+</div>
 </div>
 
 {% endblock %}
