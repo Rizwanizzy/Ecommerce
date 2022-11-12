@@ -12,4 +12,5 @@ urlpatterns = [
     path('faqs',views.faqs,name='faqs'),
     path('terms',views.terms,name='terms'),
     path('privacy',views.privacy,name='privacy'),
+    path('profile',views.profile,name='profile'),
 ]

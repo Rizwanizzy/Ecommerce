@@ -62,3 +62,7 @@ def terms(request):
 
 def privacy(request):
     return render(request, 'privacy.html')
+
+
+def profile(request):
+    return render(request, 'user_profile.html')
