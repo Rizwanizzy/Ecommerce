@@ -3,7 +3,7 @@
 
 
 <!-- log in -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+	
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -13,14 +13,15 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="#" method="post">
+					<form action="" method="post">
+						{% csrf_token %}
 						<div class="form-group">
 							<label class="col-form-label">Username</label>
-							<input type="text" class="form-control" placeholder=" " name="Name" required="">
+							<input type="text" class="form-control" placeholder=" " name="username" required="">
 						</div>
 						<div class="form-group">
 							<label class="col-form-label">Password</label>
-							<input type="password" class="form-control" placeholder=" " name="Password" required="">
+							<input type="password" class="form-control" placeholder=" " name="password" required="">
 						</div>
 						<div class="right-w3l">
 							<input type="submit" class="form-control" value="Log in">
@@ -32,13 +33,15 @@
 							</div>
 						</div>
 						<p class="text-center dont-do mt-3">Don't have an account?
-							<a href="#" data-toggle="modal" data-target="#exampleModal2">
+							<a href="{% url 'register' %}" >
 								Register Now</a>
 						</p>
+						{% for message in messages %}
+							{{message}}
+						{% endfor %}	
 					</form>
 				</div>
 			</div>
 		</div>
 
 {% endblock %}
-	</div>

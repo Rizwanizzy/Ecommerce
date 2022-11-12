@@ -50,3 +50,15 @@ def contact(request):
 
 def about(request):
     return render(request, 'about.html')
+
+def help(request):
+    return render(request, 'help.html')
+
+def faqs(request):
+    return render(request, 'faqs.html')
+
+def terms(request):
+    return render(request, 'terms.html')
+
+def privacy(request):
+    return render(request, 'privacy.html')
