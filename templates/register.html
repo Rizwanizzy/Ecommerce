@@ -39,6 +39,12 @@
 								<a href="{% url 'terms' %}"> Terms of Use</a> and <a href="{% url 'privacy' %}">Privacy Policy.</a></p>
 							<input type="submit" class="form-control" value="Register">
 						</div>
+						<div class="sub-w3l">
+							<div class="custom-control custom-checkbox mr-sm-2">
+								<input type="checkbox" class="custom-control-input" id="customControlAutosizing2">
+								<label class="custom-control-label" for="customControlAutosizing2">I Accept to the Terms & Conditions</label>
+							</div>
+						</div>
 						{% for message in messages %}
 							{{message}}
 						{% endfor %}	
