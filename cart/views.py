@@ -22,7 +22,7 @@ def c_id(request):
     ct_id = request.session.session_key
     if not ct_id:
         ct_id = request.session.create()
-        return ct_id
+    return ct_id
 
 
 def add_cart(request, product_id):
@@ -33,11 +33,11 @@ def add_cart(request, product_id):
         ct = cartlist.objects.create(cart_id=c_id(request))
         ct.save()
     try:
-        c_items = items.objects.get(product=prod, cart=ct)
-        if c_items.quantity < c_items.stock:
+        c_items = items.objects.get(products=prod, cart=ct)
+        if c_items.quantity < c_items.products.stock:
             c_items.quantity += 1
         c_items.save()
     except items.DoesNotExist:
-        c_items = items.objects.create(product=prod, quantity=1, cart=ct)
+        c_items = items.objects.create(products=prod, quantity=1, cart=ct)
         c_items.save()
-        return redirect('cartdetails')
+    return redirect('cartdetails')
