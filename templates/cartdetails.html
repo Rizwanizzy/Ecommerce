@@ -34,17 +34,17 @@
 								<td class="invert">
 									<div class="quantity">
 
-											
+											<a href="{% url 'minus' i.products.id %}" ><i class="fa fa-minus-circle" style="font-size:16px; color:black"></i></span></a>
 											<label style="width:20px">{{i.quantity}}</label>
 
-											
+											<a href="{% url 'addcart' i.products.id %}"><i class="fa fa-plus-circle" style="font-size:16px;color:black"></i></a>
 
 									</div>
 								</td>
 								<td class="invert">₹{{i.total}}</td>
 								<td class="invert">
 									<div class="rem">
-										
+										<a href="{% url 'delete' i.products.id %}" ><i class="fa fa-trash" style="font-size:25px;color:black"></i></a>
 									</div>
 								</td>
 							</tr>
