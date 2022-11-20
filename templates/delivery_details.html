@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block body %}
+	<div class="privacy py-sm-5 py-4" xmlns="http://www.w3.org/1999/html">
+		<div class="container py-xl-4 py-lg-2">
+			<div class="checkout-left" style="margin:auto;width:60%">
+				<div class="address_form_agile mt-sm-5 mt-4">
+					<h4 class="mb-sm-4 mb-3">Add Delivery Details</h4>
+					<form action="" method="post" class="creditly-card-form agileinfo_form">
+						<div class="creditly-wrapper wthree, w3_agileits_wrapper" >
+							<div class="information-wrapper">
+								<div class="first-row">
+									<div class="controls form-group">
+										<input class="billing-address-name form-control" type="text" name="name" placeholder="Full Name" required="">
+									</div>
+									<div class="w3_agileits_card_number_grids">
+										<div class="w3_agileits_card_number_grid_left form-group">
+											<div class="controls">
+												<input type="text" class="form-control" placeholder="Mobile Number" name="number" required="">
+											</div>
+										</div>
+										<div class="w3_agileits_card_number_grid_right form-group">
+											<div class="controls">
+												<input type="text" class="form-control" placeholder="Landmark" name="landmark" required="">
+											</div>
+										</div>
+									</div>
+									<div class="controls form-group">
+										<input type="text" class="form-control" placeholder="Town/City" name="city" required="">
+									</div>
+									<div class="controls form-group">
+										<select class="option-w3ls">
+											<option>Select Address type</option>
+											<option>Office</option>
+											<option>Home</option>
+											<option>Commercial</option>
+
+										</select>
+									</div>
+								</div>
+								<button class="submit check_out btn">Delivery to this Address</button>
+							</div>
+						</div>
+					</form>
+					<div class="checkout-right-basket">
+						<a href="">Make a Payment
+							<span class="far fa-hand-point-right"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -61,3 +61,7 @@ def delete_cart(request, product_id):
     c_items = items.objects.get(products=prod, cart=ct)
     c_items.delete()
     return redirect('cartdetails')
+
+
+def delivery_details(request):
+    return render(request, 'delivery_details.html')
