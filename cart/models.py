@@ -1,5 +1,6 @@
 from shop.models import product
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -21,3 +22,17 @@ class items(models.Model):
 
     def total(self):
         return self.products.price*self.quantity
+
+
+class del_details(models.Model):
+    username=models.ForeignKey(User,on_delete=models.CASCADE)
+    name=models.CharField(max_length=255)
+    number=models.IntegerField()
+    landmark=models.CharField(max_length=255)
+    city=models.CharField(max_length=255)
+    address_type=models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.username
+
+

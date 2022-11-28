@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from shop.models import *
 from .models import *
+from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -64,4 +65,17 @@ def delete_cart(request, product_id):
 
 
 def delivery_details(request):
-    return render(request, 'delivery_details.html')
+    if request.method=='POST':
+        name=request.POST['name']
+        number=request.POST['number']
+        landmark=request.POST['landmark']
+        city=request.POST['city']
+        address_type=request.POST['address_type']
+        address=del_details.objects.create(name=name, number=number, landmark=landmark,city=city,address_type=address_type,username=request.user)
+        address.save()
+        messages.error(request,f'Delivery address saved successfully')
+        return render(request, 'delivery_details.html')
+    else:
+        messages.error(request,f'please fill the above fields')
+        return render(request, 'delivery_details.html')
+    
