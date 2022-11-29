@@ -79,3 +79,6 @@ def delivery_details(request):
         messages.error(request,f'please fill the above fields')
         return render(request, 'delivery_details.html')
     
+
+def payment(request):
+    return render(request, 'payment.html')
