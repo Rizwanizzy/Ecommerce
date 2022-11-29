@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from shop.models import *
 from .models import *
 from django.core.exceptions import ObjectDoesNotExist
+from datetime import datetime,timedelta
 
 
 # Create your views here.
@@ -87,3 +88,18 @@ def payment(request,amount=0,total=0):
     except ObjectDoesNotExist:
         pass
     return render(request, 'payment.html',{'amt':amount,'tot':total})
+
+
+def order_successful(request,amount=0,total=0):
+    obj=del_details.objects.all()
+    now=datetime.now()+timedelta(3)
+    dt=now.strftime('%Y-%m-%d')
+    try:
+        ct = cartlist.objects.get(cart_id=c_id(request))
+        ct_items = items.objects.filter(cart=ct, active=True)
+        for i in ct_items:
+            total += (i.products.price * i.quantity)
+            amount=total+5
+    except ObjectDoesNotExist:
+        pass
+    return render(request,'order_successful.html',{'obj':obj,'amt':amount,'tot':total,'date':dt})

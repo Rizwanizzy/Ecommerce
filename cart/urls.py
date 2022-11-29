@@ -8,4 +8,5 @@ urlpatterns = [
                   path('del/<int:product_id>/', views.delete_cart, name='delete'),
                   path('place_order', views.delivery_details, name='place_order'),
                   path('payment', views.payment, name='payment'),
+                  path('order_successful', views.order_successful, name='order_successful'),
               ]
