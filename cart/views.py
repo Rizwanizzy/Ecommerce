@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from shop.models import *
 from .models import *
-from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -73,12 +72,18 @@ def delivery_details(request):
         address_type=request.POST['address_type']
         address=del_details.objects.create(name=name, number=number, landmark=landmark,city=city,address_type=address_type,username=request.user)
         address.save()
-        messages.error(request,f'Delivery address saved successfully')
-        return render(request, 'delivery_details.html')
+        return render(request, 'payment.html')
     else:
-        messages.error(request,f'please fill the above fields')
         return render(request, 'delivery_details.html')
     
 
-def payment(request):
-    return render(request, 'payment.html')
+def payment(request,amount=0,total=0):
+    try:
+        ct = cartlist.objects.get(cart_id=c_id(request))
+        ct_items = items.objects.filter(cart=ct, active=True)
+        for i in ct_items:
+            total += (i.products.price * i.quantity)
+            amount=total+5
+    except ObjectDoesNotExist:
+        pass
+    return render(request, 'payment.html',{'amt':amount,'tot':total})
