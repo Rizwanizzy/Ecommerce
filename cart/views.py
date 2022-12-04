@@ -3,7 +3,7 @@ from shop.models import *
 from .models import *
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime,timedelta
-
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -64,7 +64,7 @@ def delete_cart(request, product_id):
     return redirect('cartdetails')
 
 
-def delivery_details(request):
+def delivery_details(request,amount=0,total=0):
     if request.method=='POST':
         name=request.POST['name']
         number=request.POST['number']
@@ -73,27 +73,29 @@ def delivery_details(request):
         address_type=request.POST['address_type']
         address=del_details.objects.create(name=name, number=number, landmark=landmark,city=city,address_type=address_type,username=request.user)
         address.save()
-        return render(request, 'payment.html')
+        try:
+            ct = cartlist.objects.get(cart_id=c_id(request))
+            ct_items = items.objects.filter(cart=ct, active=True)
+            for i in ct_items:
+                total += (i.products.price * i.quantity)
+                amount=total+5
+        except ObjectDoesNotExist:
+            pass
+        return render(request, 'payment.html',{'amt':amount,'tot':total})
     else:
         return render(request, 'delivery_details.html')
     
 
-def payment(request,amount=0,total=0):
-    try:
-        ct = cartlist.objects.get(cart_id=c_id(request))
-        ct_items = items.objects.filter(cart=ct, active=True)
-        for i in ct_items:
-            total += (i.products.price * i.quantity)
-            amount=total+5
-    except ObjectDoesNotExist:
-        pass
-    return render(request, 'payment.html',{'amt':amount,'tot':total})
+def payment(request):
+    return render(request, 'payment.html')
 
 
 def order_successful(request,amount=0,total=0):
     obj=del_details.objects.all()
+    user=User.objects.all()
     now=datetime.now()+timedelta(3)
     dt=now.strftime('%Y-%m-%d')
+    
     try:
         ct = cartlist.objects.get(cart_id=c_id(request))
         ct_items = items.objects.filter(cart=ct, active=True)
@@ -102,4 +104,6 @@ def order_successful(request,amount=0,total=0):
             amount=total+5
     except ObjectDoesNotExist:
         pass
-    return render(request,'order_successful.html',{'obj':obj,'amt':amount,'tot':total,'date':dt})
+    return render(request,'order_successful.html',{'obj':obj,'amt':amount,'tot':total,'date':dt,'user':user})
+
+        

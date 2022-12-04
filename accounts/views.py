@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
+from .models import *
 
 
 # Create your views here.
@@ -50,3 +51,20 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+
+def profile(request):
+    return render(request, 'user_profile.html')
+
+
+def default_details(request):
+    if request.method=='POST':
+        gender=request.POST['gender']
+        email=request.POST['email']
+        number=request.POST['number']
+        address=request.POST['address']
+        details=personal_details.objects.create(gender=gender,email=email,number=number,address=address,first_name=request.user)
+        details.save
+        return redirect(request,'profile',{'det':details})
+    else:
+        return render(request, 'default_details.html')
