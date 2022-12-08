@@ -64,7 +64,7 @@ def default_details(request):
         number=request.POST['number']
         address=request.POST['address']
         details=personal_details.objects.create(gender=gender,email=email,number=number,address=address,first_name=request.user)
-        details.save
+        details.save()
         return redirect(request,'profile',{'det':details})
     else:
         return render(request, 'default_details.html')

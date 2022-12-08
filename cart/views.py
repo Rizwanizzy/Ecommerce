@@ -85,14 +85,17 @@ def delivery_details(request,amount=0,total=0):
     else:
         return render(request, 'delivery_details.html')
     
+    
 
 def payment(request):
     return render(request, 'payment.html')
 
 
 def order_successful(request,amount=0,total=0):
-    obj=del_details.objects.all()
-    user=User.objects.all()
+    #delivery details
+    obj=del_details.objects.all().filter(username=request.user)
+    #user details
+    user=User.objects.all().filter(username=request.user)
     now=datetime.now()+timedelta(3)
     dt=now.strftime('%Y-%m-%d')
     
