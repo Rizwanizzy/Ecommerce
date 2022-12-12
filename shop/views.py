@@ -11,12 +11,12 @@ def index(request, c_slug=None):
         c_page = get_object_or_404(categ, slug=c_slug)
         prod = product.objects.filter(category=c_page, availability=True)
         smart_phone=product.objects.filter(category='Smart Phones')
-        #laptop=product.objects.filter(category='laptops')
+        laptop=product.objects.filter(category='Laptops')
         
     else:
         prod = product.objects.all().filter(availability=True)
         smart_phone=product.objects.filter(category=5)
-        
+        laptop=product.objects.filter(category=2)
     cat = categ.objects.all()
 
     paginator = Paginator(prod, 3)
@@ -28,7 +28,7 @@ def index(request, c_slug=None):
         pro = paginator.page(page)
     except(EmptyPage, InvalidPage):
         pro = paginator.page(paginator.num_pages)
-    return render(request, 'index.html', {'prod': prod, 'cat': cat, 'pg': pro,'smart_phone':smart_phone})
+    return render(request, 'index.html', {'prod': prod, 'cat': cat, 'pg': pro,'smart_phone':smart_phone,'laptop':laptop})
 
 
 def product_details(request, c_slug, p_slug):

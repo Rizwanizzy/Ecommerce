@@ -5,6 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime,timedelta
 from django.contrib.auth.models import User
 
+
 # Create your views here.
 
 def cart_details(request, tot=0, count=0, ct_items=None):
@@ -88,6 +89,18 @@ def delivery_details(request,amount=0,total=0):
     
 
 def payment(request):
+    try:
+        ct = cartlist.objects.get(cart_id=c_id(request))
+        ct_items = items.objects.filter(cart=ct, active=True)
+        for i in ct_items:
+            total += (i.products.price * i.quantity)
+            amount=total+5
+    except ObjectDoesNotExist:
+        pass
+    now=datetime.now()+timedelta(3)
+    dt=now.strftime('%Y-%m-%d')
+    order=orders.objects.create(product=ct_items,price=amount,delivery_date=dt)
+    order.save()
     return render(request, 'payment.html')
 
 
@@ -107,6 +120,33 @@ def order_successful(request,amount=0,total=0):
             amount=total+5
     except ObjectDoesNotExist:
         pass
-    return render(request,'order_successful.html',{'obj':obj,'amt':amount,'tot':total,'date':dt,'user':user})
+    return render(request,'order_successful.html',{'obj':obj,'amt':amount,'tot':total,'date':dt,'user':user,'ci':ct_items})
 
-        
+
+def all_address(request):
+    if request.user.id:
+        if request.method=="POST":
+            address=request.POST['address_id']
+            print("address is :",address)
+            return render(request,'order_successful.html',{'add':address})
+            
+        else:
+            pass
+        addresses = del_details.objects.filter(username=request.user)
+        return render(request, 'all_address.html', {'address': addresses})
+    else:
+        pass
+
+
+def order_product(request):
+    amount = 0
+    total = 0
+    try:
+        ct = cartlist.objects.get(cart_id=c_id(request))
+        ct_items = items.objects.filter(cart=ct, active=True)
+        for i in ct_items:
+            total += (i.products.price * i.quantity)
+            amount = total + 5
+    except ObjectDoesNotExist:
+        pass
+    return render(request, 'payment.html', {'amt': amount, 'tot': total})

@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import personal_details
+from .models import personaldetails
 # Register your models here.
-admin.site.register(personal_details)
+admin.site.register(personaldetails)

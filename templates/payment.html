@@ -26,12 +26,15 @@
                             <li class="nav-item"> <a data-toggle="pill" href="#net-banking" class="nav-link "> <i class="fas fa-mobile-alt mr-2"></i> Net Banking </a> </li>
 							<li class="nav-item"> <a data-toggle="pill" href="#cash-on-delivery" class="nav-link"> <i class="fas fa-money-bill-alt mr-2"></i> Cash On Delivery </a> </li>
 						</ul>
-                    </div> <!-- End -->
+      </div> <!-- End -->
+            <form method="" action="">
+            
                     <!-- Credit card form content -->
                     <div class="tab-content">
+                    
                         <!-- credit card info-->
                         <div id="credit-card" class="tab-pane fade show active pt-3">
-                            <form role="form" onsubmit="event.preventDefault()">
+                            
                                 <div class="form-group"> <label for="username">
                                         <h6>Card Owner</h6>
                                     </label> <input type="text" name="username" placeholder="Card Owner Name" required class="form-control "> </div>
@@ -56,9 +59,7 @@
                                             </label> <input type="text" required class="form-control"> </div>
                                     </div>
                                 </div>
-                                <div class="card-footer"> <a href="{% url 'order_successful' %}"><button type="button" class="subscribe btn btn-primary btn-block shadow-sm"> Confirm Payment </button></a>
-                            </form>
-                        </div>
+                                
                     </div> <!-- End -->
                     <!-- Paypal info -->
                     <div id="paypal" class="tab-pane fade pt-3">
@@ -84,22 +85,23 @@
                                 <option>Bank 9</option>
                                 <option>Bank 10</option>
                             </select> </div>
-                        <div class="form-group">
-                          
-                          <a href="{% url 'order_successful' %}"><p> <button type="button" class="btn btn-primary "><i class="fas fa-mobile-alt mr-2"></i> Proceed Payment</button> </p></a>
-                         
-                        </div>
+                        
                         <p class="text-muted">Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>
                     </div> <!-- End -->
-					<div id="cash-on-delivery" class="tab-pane fade pt-3 text-center">
-						<div class="form-group">
-							<p class="text-muted"> Note: Due to handling costs, a nominal fee of Rs.5 will be charged for orders placed using this option. Avoid this fee by paying online now. </p><br>
-							<a href="{% url 'order_successful' %}"><button type="button" class="btn btn-primary"><i class="fas fa-money-bill-alt mr-2"></i> Confirm Payment </button></a>
-						</div>
-					</div> <!--Cash on Delivery End -->
+                    <div id="cash-on-delivery" class="tab-pane fade pt-3 text-center">
+                      <div class="form-group">
+                        <p class="text-muted"> Note: Due to handling costs, a nominal fee of Rs.5 will be charged for orders placed using this option. Avoid this fee by paying online now. </p><br>
+                      </div>
+                    </div> <!--Cash on Delivery End -->
+                    <div class="text-center">
+                    <a href="{% url 'order_successful' %}"><button type="button" class="btn btn-primary"><i class="mr-2"></i> Confirm Payment </button></a>
+                    </div>  
                     <!-- End -->
+                  
                 </div>
+              
             </div>
+          </form>
 		</div>
 		<hr>
         </div>

@@ -35,4 +35,14 @@ class del_details(models.Model):
     def __str__(self):
         return self.username
 
+class orders(models.Model):
+    product=models.CharField(max_length=255)
+    price=models.IntegerField()
+    delivery_date=models.DateField()
+
+    def __str__(self):
+        return self.name
+
+
+
 
