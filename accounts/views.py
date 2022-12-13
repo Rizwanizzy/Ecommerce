@@ -54,10 +54,13 @@ def logout(request):
 
 
 def profile(request):
-    return render(request, 'user_profile.html')
+    details=personaldetails.objects.filter(first_name=request.user).order_by('-id').first()
+    # print(details)
+    return render(request, 'user_profile.html',{'det':details})
 
 
 def default_details(request):
+    # if request.user is None:
     if request.method=='POST':
         gender=request.POST['gender']
         email=request.POST['email']
@@ -65,6 +68,8 @@ def default_details(request):
         address=request.POST['address']
         details=personaldetails.objects.create(gender=gender,email=email,number=number,address=address,first_name=request.user)
         details.save()
-        return redirect(request,'profile',{'det':details})
+        print("details:",request.user)
+        return render(request,'user_profile.html',{'det':details})
     else:
         return render(request, 'default_details.html')
+  

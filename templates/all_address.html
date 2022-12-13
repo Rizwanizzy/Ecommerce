@@ -3,92 +3,88 @@
 {% block body %}
 
 <form action="{% url 'order_product' %}" method="POST">
+  {% csrf_token %}
   <div class="row container-fluid">
-	{% csrf_token %}
-	{% for add in address %}
+    {% if address is not none %}
+        {% for add in address %}
+          <div style="color:black;margin:auto" class="col-lg-4">
+            <!-- edit button -->
+                <div class=""><br>
+                    <div class="card border-dark mb-4">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <p class="mb-0">Full Name</p>
+                            </div>
+                            <div class="col-sm-6">
+                              <p class="text-muted mb-0">{{add.name}}</p>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <p class="mb-0">number</p>
+                            </div>
+                            <div class="col-sm-6">
+                              <p class="text-muted mb-0">{{add.number}}</p>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <p class="mb-0">landmark</p>
+                            </div>
+                            <div class="col-sm-6">
+                              <p class="text-muted mb-0">{{add.landmark}}</p>
+                            </div>
+                          </div>
+                          <hr>
 
-	<div style="color:black;margin:auto" class="col-lg-4">
-		<!-- edit button -->
-        <div class=""><br>
-            <div class="card border-dark mb-4">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <p class="mb-0">Full Name</p>
-                    </div>
-                    <div class="col-sm-6">
-                      <p class="text-muted mb-0">{{add.name}}</p>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <p class="mb-0">number</p>
-                    </div>
-                    <div class="col-sm-6">
-                      <p class="text-muted mb-0">{{add.number}}</p>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <p class="mb-0">landmark</p>
-                    </div>
-                    <div class="col-sm-6">
-                      <p class="text-muted mb-0">{{add.landmark}}</p>
-                    </div>
-                  </div>
-                  <hr>
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <p class="mb-0">city</p>
+                            </div>
+                            <div class="col-sm-6">
+                              <p class="text-muted mb-0">{{add.city}}</p>
+                            </div>
+                          </div>
+                            <hr>
 
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <p class="mb-0">city</p>
-                    </div>
-                    <div class="col-sm-6">
-                      <p class="text-muted mb-0">{{add.city}}</p>
-                    </div>
-                  </div>
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-sm-6">
-                          <p class="mb-0">address type</p>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                  <p class="mb-0">address type</p>
+                                </div>
+                                <div class="col-sm-6">
+                                  <p class="text-muted mb-0">{{add.address_type}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div style="text-align:center" >
+                                <p class="text-muted mb-0">Choose Any
+                            <input checked type="radio" value="{{address.id}}" name="address_id"><a class="btn btn-danger" href="{% url 'detailsdeleteview' add.id %}">Delete</a></p>
+                            
+                            
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                          <p class="text-muted mb-0">{{add.address_type}}</p>
-                        </div>
                     </div>
-                    <hr>
-                    <div style="text-align:center" >
-                        <p class="text-muted mb-0">Choose Any
-                    <input checked type="radio" value="{{address.id}}" name="address_id"></p>
-                    
-                    </div>
-                </div>
-<!--                </div>-->
-<!--                <div class="text-center">-->
-<!--                <a href="{% url 'default_details' %}"><button class="btn btn-success">Edit</button></a>-->
-<!--                </div><br>-->
-<!--              </div>-->
-            </div>
-<!--		<label class="pl-5 radio " name="address_list" id="address_list" readonly>-->
-<!--			<span>name : {{add.name}}</span><br>-->
-<!--			<span>number : {{add.number}}</span><br>-->
-<!--			<span>town : {{add.town}}</span><br>-->
-<!--			<span>landmark : {{add.landmark}}</span><br>-->
-<!--			<span>city : {{add.city}}</span><br>-->
-<!--			<span>address type : {{add.address_type}}</span>-->
-<!--		</label>-->
-<!--		<a href="#" class="float-right btn">Edit Address</a>-->
-	    </div>
-    </div>
-	{% endfor %}
-
-    </div>
-  <div style="text-align:center"><br>
-	<button style="margin:auto" class="submit check_out btn">Delivery to this Address</button>
-    </div>
+              </div>
+          </div>
+        
+        {% endfor %}
+      </div>
+        <div style="text-align:center"><br>
+          <button style="margin:auto" class="submit check_out btn">Delivery to this Address</button>
+        </div>
+    {% else %}
+      <div class="container mt-5" style="width:50%;height:12rem">
+          <br><br><h4 class="mb-sm-4 mb-3" style="margin-left:110px;color:#F45C5D">Please Add Your Address</h4>
+      </div>
+    {% endif %}
+  </div>
 </form>
+
+
+
 
 
 

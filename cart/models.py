@@ -33,7 +33,7 @@ class del_details(models.Model):
     address_type=models.CharField(max_length=255)
 
     def __str__(self):
-        return self.username
+        return str(self.username)
 
 class orders(models.Model):
     product=models.CharField(max_length=255)
@@ -41,7 +41,7 @@ class orders(models.Model):
     delivery_date=models.DateField()
 
     def __str__(self):
-        return self.name
+        return self.product
 
 
 

@@ -10,4 +10,4 @@ class personaldetails(models.Model):
     address=models.CharField(max_length=255)
 
     def __str__(self):
-        return self.first_name
+        return str(self.first_name)

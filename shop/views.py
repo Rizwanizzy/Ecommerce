@@ -15,7 +15,7 @@ def index(request, c_slug=None):
         
     else:
         prod = product.objects.all().filter(availability=True)
-        smart_phone=product.objects.filter(category=5)
+        smart_phone=product.objects.filter(category=1)
         laptop=product.objects.filter(category=2)
     cat = categ.objects.all()
 

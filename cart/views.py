@@ -4,6 +4,8 @@ from .models import *
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime,timedelta
 from django.contrib.auth.models import User
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -150,3 +152,8 @@ def order_product(request):
     except ObjectDoesNotExist:
         pass
     return render(request, 'payment.html', {'amt': amount, 'tot': total})
+
+class detailsdeleteview(DeleteView):
+    model = del_details
+    template_name = 'delete_details.html'
+    success_url = reverse_lazy('all_address')
