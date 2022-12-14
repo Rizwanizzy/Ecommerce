@@ -27,8 +27,8 @@
 							<li class="nav-item"> <a data-toggle="pill" href="#cash-on-delivery" class="nav-link"> <i class="fas fa-money-bill-alt mr-2"></i> Cash On Delivery </a> </li>
 						</ul>
       </div> <!-- End -->
-            <form method="" action="">
-            
+            <form method="post" action="">
+                {% csrf_token %}
                     <!-- Credit card form content -->
                     <div class="tab-content">
                     
@@ -65,7 +65,7 @@
                     <div id="paypal" class="tab-pane fade pt-3">
                         <h6 class="pb-2">Select your paypal account type</h6>
                         <div class="form-group "> <label class="radio-inline"> <input type="radio" name="optradio" checked> Domestic </label> <label class="radio-inline"> <input type="radio" name="optradio" class="ml-5">International </label></div>
-                        <a href="{% url 'order_successful' %}"><p> <button type="button" class="btn btn-primary "><i class="fab fa-paypal mr-2"></i> Log into my Paypal</button> </p></a>
+                        <p> <button type="button" class="btn btn-primary "><i class="fab fa-paypal mr-2"></i> Log into my Paypal</button> </p>
                         <p class="text-muted"> Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>
                     </div> <!-- End -->
                     <!-- bank transfer info -->

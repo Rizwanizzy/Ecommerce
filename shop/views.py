@@ -10,8 +10,8 @@ def index(request, c_slug=None):
     if c_slug != None:
         c_page = get_object_or_404(categ, slug=c_slug)
         prod = product.objects.filter(category=c_page, availability=True)
-        smart_phone=product.objects.filter(category='Smart Phones')
-        laptop=product.objects.filter(category='Laptops')
+        smart_phone=product.objects.filter(category=1)
+        laptop=product.objects.filter(category=2)
         
     else:
         prod = product.objects.all().filter(availability=True)

@@ -2,10 +2,10 @@
 
 {% block body %}
 
-<form action="{% url 'order_product' %}" method="POST">
+<form action="" method="POST">
   {% csrf_token %}
   <div class="row container-fluid">
-    {% if address is not none %}
+    {% if address %}
         {% for add in address %}
           <div style="color:black;margin:auto" class="col-lg-4">
             <!-- edit button -->
@@ -61,10 +61,11 @@
                             <hr>
                             <div style="text-align:center" >
                                 <p class="text-muted mb-0">Choose Any
-                            <input checked type="radio" value="{{address.id}}" name="address_id"><a class="btn btn-danger" href="{% url 'detailsdeleteview' add.id %}">Delete</a></p>
-                            
-                            
+                                <input checked type="radio" value="{{add.id}}" name="address_id">
+                                <a class="btn btn-danger" href="{% url 'detailsdeleteview' add.id %}">Delete</a></p>
+                                                        
                             </div>
+                            {{add.id}}
                         </div>
                     </div>
               </div>
