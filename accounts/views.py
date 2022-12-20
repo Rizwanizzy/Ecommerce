@@ -54,7 +54,6 @@ def logout(request):
 
 
 def profile(request):
-    
         details=personaldetails.objects.filter(first_name=request.user).order_by('-id').first()
         # print(details)
         return render(request, 'user_profile.html',{'det':details})

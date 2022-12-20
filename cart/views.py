@@ -76,17 +76,19 @@ def delivery_details(request,amount=0,total=0):
         landmark=request.POST['landmark']
         city=request.POST['city']
         address_type=request.POST['address_type']
+        print("name=",name)
         address=del_details.objects.create(name=name, number=number, landmark=landmark,city=city,address_type=address_type,username=request.user)
         address.save()
-        try:
-            ct = cartlist.objects.get(cart_id=c_id(request))
-            ct_items = items.objects.filter(cart=ct, active=True)
-            for i in ct_items:
-                total += (i.products.price * i.quantity)
-                amount=total+5
-        except ObjectDoesNotExist:
-            pass
-        return render(request, 'payment.html',{'amt':amount,'tot':total})
+        # try:
+        #     ct = cartlist.objects.get(cart_id=c_id(request))
+        #     ct_items = items.objects.filter(cart=ct, active=True)
+        #     for i in ct_items:
+        #         total += (i.products.price * i.quantity)
+        #         amount=total+5
+        # except ObjectDoesNotExist:
+        #     pass
+        #addresses = del_details.objects.filter(username=request.user)
+        return redirect('all_address')
     else:
         return render(request, 'delivery_details.html')
     
@@ -104,34 +106,32 @@ def payment(request):
                 amount=total+5
         except ObjectDoesNotExist:
             pass
-        now=datetime.now()+timedelta(3)
-        dt=now.strftime('%Y-%m-%d')
-        order=orders.objects.create(product=ct_items,price=amount,delivery_date=dt)
-        order.save()
         return render(request, 'payment.html')
 
 
 def order_successful(request,amount=0,total=0):
-    if request.user.id:
+    # if request.user.id:
         #delivery details
         # add=get_address(request)
         # print("address:",add)
-        obj=del_details.objects.all().filter(username=request.user)
+        user=del_details.objects.filter(username=request.user)
+        # print('username =',user.get())
+        obj=orders.objects.latest('id')
         #user details
-        user=User.objects.all().filter(username=request.user)
-        now=datetime.now()+timedelta(3)
-        dt=now.strftime('%d-%b-%Y')
+        # user=User.objects.all().filter(username=request.user)
+        # now=datetime.now()+timedelta(3)
+        # dt=now.strftime('%d-%b-%Y')
         
-        try:
-            ct = cartlist.objects.get(cart_id=c_id(request))
-            ct_items = items.objects.filter(cart=ct, active=True)
-            for i in ct_items:
-                total += (i.products.price * i.quantity)
-                amount=total+5
-        except ObjectDoesNotExist:
-            pass
-        return render(request,'order_successful.html',{'obj':obj,'amt':amount,'tot':total,'date':dt,'user':user,'ci':ct_items})
-    return redirect('login')
+        # try:
+        #     ct = cartlist.objects.get(cart_id=c_id(request))
+        #     ct_items = items.objects.filter(cart=ct, active=True)
+        #     for i in ct_items:
+        #         total += (i.products.price * i.quantity)
+        #         amount=total+5
+        # except ObjectDoesNotExist:
+        #     pass
+        return render(request,'order_successful.html',{'obj':obj})
+    # return redirect('login')
 
 
 # def get_address(request):
@@ -143,7 +143,7 @@ def order_successful(request,amount=0,total=0):
 
 def all_address(request,amount=0,total=0):
     if request.method=="POST":
-        add=request.POST.get('address_id')
+        add=request.POST['address_id']
         # order_successful(request,add,amount,total)
         print("all_address address:",add)
         try:
@@ -154,6 +154,12 @@ def all_address(request,amount=0,total=0):
                 amount=total+5
         except ObjectDoesNotExist:
             pass
+        address=del_details.objects.get(id=add)
+        now=datetime.now()+timedelta(3)
+        dt=now.strftime('%Y-%m-%d')
+        print('address=',address)
+        order=orders(address=address,product=ct,price=total,delivery_date=dt)
+        order.save()
         return render(request,'payment.html',{'amt':amount,'tot':total})
     else:
         addresses = del_details.objects.filter(username=request.user)
@@ -179,3 +185,10 @@ class detailsdeleteview(DeleteView):
     model = del_details
     template_name = 'delete_details.html'
     success_url = reverse_lazy('all_address')
+
+
+def all_orders(request):
+    # print("current user=",user)
+    # order=orders.objects.filter(address=request.user).order_by('-id')
+    order=orders.objects.all().order_by('-id')
+    return render(request,'orders.html',{'order':order})

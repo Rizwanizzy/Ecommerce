@@ -72,8 +72,8 @@
 						
 						{% if user.is_authenticated %}
 						<li class="text-center border-right text-white">
-							<a href="#" data-toggle="modal" data-target="#exampleModal" class="text-white">
-								<i class="fas fa-truck mr-2"></i>Track Order</a>
+							<a href="{% url 'orders' %}" class="text-white">
+								<i class="fas fa-shopping-bag mr-2"></i>Orders</a>
 						</li>
 						<li class="text-center text-white">
 							{% comment %} {% if user.is_authenticated %} {% endcomment %}
