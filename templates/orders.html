@@ -1,70 +1,76 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<section style="background-color: #eee;">
+<section style="background-color: light;">
     <div class="container py-5">
-    {% for i in order %}  
-      <div class="row">        
-        <div class="col-lg-12">
-          <div class="card mb-4">
-            {% comment %} {% if det %} {% endcomment %}
-              
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Delivery at</p>
+      {% if order %}
+        {% for i in order %}
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card mb-4">
+                {% comment %} {% if det %} {% endcomment %}
+
+                  <div class="card-body" style="border-style: solid;border-color:black;border-width: 1px;">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <p class="mb-0">Delivery at</p>
+                      </div>
+                      <div class="col-sm-9">
+                        <p class="text-muted mb-0">{{i.address.name}}</p>
+                        <p class="text-muted mb-0">{{i.address.number}}</p>
+                        <p class="text-muted mb-0">{{i.address.landmark}}&nbsp&nbsp{{i.address.city}}</p>
+                        <p class="text-muted mb-0">{{i.address.address_type}}</p>
+                      </div>
+                    </div>
+                    <hr>
+                    {% comment %} <div class="row">
+                      <div class="col-sm-3">
+                        <p class="mb-0">Gender</p>
+                      </div>
+                      <div class="col-sm-9">
+                        <p class="text-muted mb-0">{{}}</p>
+                      </div>
+                    </div>
+                    <hr> {% endcomment %}
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <p class="mb-0">Products</p>
+                      </div>
+                      <div class="col-sm-9">
+                        <p class="text-muted mb-0">{{i.product}}</p>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <p class="mb-0">Price</p>
+                      </div>
+                      <div class="col-sm-9">
+                        <p class="text-muted mb-0">Rs.{{i.price}}/-</p>
+                      </div>
+                    </div>
+                    <hr>
+
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <p class="mb-0">Delivery on</p>
+                      </div>
+                      <div class="col-sm-9">
+                        <p class="text-muted mb-0">{{i.delivery_date}}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">{{i.address.name}}</p>
-                    <p class="text-muted mb-0">{{i.address.number}}</p>
-                    <p class="text-muted mb-0">{{i.address.landmark}}&nbsp&nbsp{{i.address.city}}</p>
-                    <p class="text-muted mb-0">{{i.address.address_type}}</p>
-                  </div>
-                </div>
-                <hr>
-                {% comment %} <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Gender</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">{{}}</p>
-                  </div>
-                </div>
-                <hr> {% endcomment %}
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Products</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">{{i.product}}</p>
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Price</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">{{i.price}}</p>
-                  </div>
-                </div>
-                <hr>
-                
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Delivery on</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">{{i.delivery_date}}</p>
-                  </div>
-                </div>
+
+                {% comment %} {% endif %} {% endcomment %}
               </div>
-              
-            {% comment %} {% endif %} {% endcomment %}
+            </div>
           </div>
-        </div>
-      </div>
-      {% endfor %}
+          {% endfor %}
+        {% else %}
+          <div class="container mt-5" style="height:12rem">
+          <br><br><h3 class="mb-sm-4 mb-3" style="margin-left:110px;color:#F45C5D">No Orders Placed Yet</h3>
+          </div>
+        {% endif %}
     </div>
   </section>
   {% endblock %}
