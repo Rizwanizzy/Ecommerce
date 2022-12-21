@@ -16,6 +16,7 @@ class cartlist(models.Model):
 
 
 class items(models.Model):
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     products = models.ForeignKey(product, on_delete=models.CASCADE)
     cart = models.ForeignKey(cartlist, on_delete=models.CASCADE)
     quantity = models.IntegerField()

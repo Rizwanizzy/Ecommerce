@@ -39,12 +39,12 @@ def add_cart(request, product_id):
         ct = cartlist.objects.create(cart_id=c_id(request))
         ct.save()
     try:
-        c_items = items.objects.get(products=prod, cart=ct)
+        c_items = items.objects.get(user=request.user,products=prod, cart=ct)
         if c_items.quantity < c_items.products.stock:
             c_items.quantity += 1
         c_items.save()
     except items.DoesNotExist:
-        c_items = items.objects.create(products=prod, quantity=1, cart=ct)
+        c_items = items.objects.create(user=request.user,products=prod, quantity=1, cart=ct)
         c_items.save()
     return redirect('cartdetails')
 
@@ -52,7 +52,7 @@ def add_cart(request, product_id):
 def min_cart(request, product_id):
     ct = cartlist.objects.get(cart_id=c_id(request))
     prod = get_object_or_404(product, id=product_id)
-    c_items = items.objects.get(products=prod, cart=ct)
+    c_items = items.objects.get(user=request.user,products=prod, cart=ct)
     if c_items.quantity > 1:
         c_items.quantity -= 1
         c_items.save()
@@ -64,7 +64,7 @@ def min_cart(request, product_id):
 def delete_cart(request, product_id):
     ct = cartlist.objects.get(cart_id=c_id(request))
     prod = get_object_or_404(product, id=product_id)
-    c_items = items.objects.get(products=prod, cart=ct)
+    c_items = items.objects.get(user=request.user,products=prod, cart=ct)
     c_items.delete()
     return redirect('cartdetails')
 
@@ -130,6 +130,7 @@ def order_successful(request, amount=0, total=0):
     #         amount=total+5
     # except ObjectDoesNotExist:
     #     pass
+    items.objects.get(user=request.user).delete()
     return render(request, 'order_successful.html', {'obj': obj})
 
 
