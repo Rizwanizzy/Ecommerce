@@ -8,6 +8,7 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 
 
+
 # Create your views here.
 
 def cart_details(request, tot=0, count=0, ct_items=None):
@@ -158,11 +159,17 @@ def all_address(request, amount=0, total=0):
         except ObjectDoesNotExist:
             pass
         address = del_details.objects.get(id=add)
+        name = address.name
+        number = address.number
+        landmark = address.landmark
+        city = address.city
+        address_type=address.address_type
         now = datetime.now() + timedelta(3)
         dt = now.strftime('%Y-%m-%d')
-        print('address=', address)
+        #print('address=', address)
         user = request.user
-        order = orders(username=user, address=address, product=ct, price=total, delivery_date=dt)
+        print("ct_items=",ct_items)
+        order = orders(username=user, name=name,number=number,landmark=landmark,city=city,address_type=address_type, product=ct, price=total, delivery_date=dt)
         order.save()
         return render(request, 'payment.html', {'amt': amount, 'tot': total})
     else:

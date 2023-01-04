@@ -43,7 +43,11 @@ class del_details(models.Model):
 
 class orders(models.Model):
     username = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-    address = models.ForeignKey(del_details, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255,null=True)
+    number = models.BigIntegerField(null=True)
+    landmark = models.CharField(max_length=255,null=True)
+    city = models.CharField(max_length=255,null=True)
+    address_type = models.CharField(max_length=255,null=True)
     product = models.ForeignKey(cartlist, on_delete=models.CASCADE)
     price = models.IntegerField()
     delivery_date = models.DateField()
