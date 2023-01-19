@@ -34,21 +34,27 @@
                     <hr> {% endcomment %}
                     <div class="row">
                       <div class="col-sm-3">
-                        <p class="mb-0">Products</p>
+                        <a href="{% url 'deliverd_items' i.id %}"><p class="mb-0">See Product Details</p></a>
                       </div>
+                      
                       <div class="col-sm-9">
-                        <p class="text-muted mb-0">{{i.product}}</p>
+                        {% comment %} {% for j in order_item %}
+                        <p class="text-muted mb-0">{{j.product.products.name}}</p>
+                        {% endfor %} {% endcomment %}
                       </div>
+                      
                     </div>
-                    <hr>
+                    {% comment %} <hr>
                     <div class="row">
                       <div class="col-sm-3">
                         <p class="mb-0">Price</p>
                       </div>
+                      {% if order_item %}
                       <div class="col-sm-9">
-                        <p class="text-muted mb-0">Rs.{{i.price}}/-</p>
+                        <p class="text-muted mb-0">Rs.{{amt}}/-</p>
                       </div>
-                    </div>
+                      {% endif %}
+                    </div> {% endcomment %}
                     <hr>
 
                     <div class="row">
@@ -65,6 +71,7 @@
               </div>
             </div>
           </div>
+
           {% endfor %}
         {% else %}
           <div class="container mt-5" style="height:12rem">

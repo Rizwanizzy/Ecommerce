@@ -21,6 +21,7 @@ class items(models.Model):
     cart = models.ForeignKey(cartlist, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     active = models.BooleanField(default=True)
+    # is_delete=
 
     def __str__(self):
         return str(self.products)
@@ -48,9 +49,15 @@ class orders(models.Model):
     landmark = models.CharField(max_length=255,null=True)
     city = models.CharField(max_length=255,null=True)
     address_type = models.CharField(max_length=255,null=True)
-    product = models.ForeignKey(cartlist, on_delete=models.CASCADE)
-    price = models.IntegerField()
     delivery_date = models.DateField()
+    
 
-    def __str__(self):
-        return str(self.product)
+    # def __str__(self):
+    #     return str(self.products)
+
+class ordered_items(models.Model):
+    order = models.ForeignKey(orders, on_delete=models.CASCADE,null=True)
+    product = models.ForeignKey(items, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    price = models.IntegerField(null=True)
+    amount=models.CharField(max_length=100,null=True)

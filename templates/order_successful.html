@@ -65,7 +65,7 @@ For what reason would it be advisable for me to think about business content? Th
                                 <tr>
                                     <td align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
                                         <p style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777; text-align:center">
-                                            Hi {{obj.address}} , Thank you for shopping with E-shop..
+                                            Hi {{obj.username}} , Thank you for shopping with E-shop..
                                         </p><br><br>
                                     </td>
                                 </tr>
@@ -125,14 +125,14 @@ For what reason would it be advisable for me to think about business content? Th
                                 <tr>
                                     <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
                                         Purchased Item ({{itc}}):<br>
-                                        {% comment %} {% for i in ci %} {% endcomment %}
-                                        <div class="text-primary">{{obj.product.name}}</div>
-                                        {% comment %} {% endfor %} {% endcomment %}
+                                        {% for i in item %}
+                                        <div class="text-primary">{{i.product.products.name}}</div>
+                                        {% endfor %}
                                     </td>
                                     <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 31px 10px 5px 10px;">
-                                        {% comment %} {% for i in ci %} {% endcomment %}
-                                            <div class="text-dark">₹{{obj.price}}/-</div>
-                                        {% comment %} {% endfor %} {% endcomment %}
+                                        {% for i in item %}
+                                            <div class="text-dark">₹{{i.product.products.price}}/-</div>
+                                        {% endfor %}
                                     </td>
                                 </tr>
                                 <tr>
@@ -156,6 +156,7 @@ For what reason would it be advisable for me to think about business content? Th
                         
                         
                     </tr>
+                    
                     {% endif %}
                     <tr>
                         <td align="center" style="padding-top: 20px;width=40%">
@@ -164,9 +165,14 @@ For what reason would it be advisable for me to think about business content? Th
                                     <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
                                         TOTAL
                                     </td>
+                                    
                                     <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                        ₹{{obj.price}}/-
+                                        {% comment %} {% for i in item %} {% endcomment %}
+                                            ₹{{amt}}/-
+                                        {% comment %} {% endfor %} {% endcomment %}
+                                        
                                     </td>
+                                    
                                 </tr>
                             
                             </table>

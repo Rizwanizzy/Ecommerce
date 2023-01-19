@@ -115,12 +115,13 @@
                 </div>
               </div>
               <hr>
+              {% if order_item %}
               <div class="row">
                 <div class="col-sm-7">
                   <p class="mb-0">Price ({{itc}}item)</p>
                 </div>
                 <div class="col-sm-5">
-                  <p class="text-muted mb-0">₹{{tot}}/-</p>
+                  <p class="text-muted mb-0">₹{{order_item.price}}/-</p>
                 </div>
               </div>
               <hr>
@@ -147,9 +148,10 @@
                   <p class="mb-0"><h5><strong>Amount Payable</strong></h5></p>
                 </div>
                 <div class="col-sm-5">
-                  <p class="text-muted mb-0">₹{{amt}}/-</p>
+                  <p class="text-muted mb-0">₹{{order_item.amount}}/-</p>
                 </div>
               </div>
+              {% endif %}
             </div>
           </div>
   
