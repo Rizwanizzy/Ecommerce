@@ -16,7 +16,7 @@ def cart_details(request, tot=0, count=0, ct_items=None):
     if request.user.id:
         try:
             ct = cartlist.objects.get(cart_id=c_id(request))
-            ct_items = items.objects.filter(cart=ct, active=True)
+            ct_items = items.objects.filter(cart=ct, active=True,is_delete=False)
             for i in ct_items:
                 tot += (i.products.price * i.quantity)
                 count += i.quantity
@@ -67,7 +67,8 @@ def delete_cart(request, product_id):
     ct = cartlist.objects.get(cart_id=c_id(request))
     prod = get_object_or_404(product, id=product_id)
     c_items = items.objects.get(user=request.user,products=prod, cart=ct)
-    c_items.delete()
+    c_items.is_delete=True
+    c_items.save()
     return redirect('cartdetails')
 
 
@@ -102,7 +103,7 @@ def payment(request):
     else:
         try:
             ct = cartlist.objects.get(cart_id=c_id(request))
-            ct_items = items.objects.filter(cart=ct, active=True)
+            ct_items = items.objects.filter(cart=ct, active=True,is_delete=False)
             for i in ct_items:
                 total += (i.products.price * i.quantity)
                 amount = total + 5
@@ -188,7 +189,7 @@ def all_address(request, amount=0, total=0):
         order = orders(username=user, name=name,number=number,landmark=landmark,city=city,address_type=address_type, delivery_date=dt)
         order.save()
         ct = cartlist.objects.get(cart_id=c_id(request))
-        ct_items = items.objects.filter(cart=ct, active=True)
+        ct_items = items.objects.filter(cart=ct, active=True,is_delete=False)
         amount=0
         for i in ct_items:
             print(
@@ -196,7 +197,7 @@ def all_address(request, amount=0, total=0):
             total += (i.products.price * i.quantity)
             amount = total + 5
             item = items.objects.get(id=i.id)
-            order_item = ordered_items(order=order, product=item, quantity=i.quantity, price=total,amount=amount)
+            order_item = ordered_items(order=order, product=item, quantity=i.quantity, price=i.products.price,amount=amount)
             order_item.save()
         return render(request, 'payment.html', {'order_item':order_item})
     else:
