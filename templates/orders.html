@@ -34,9 +34,11 @@
                     <hr> {% endcomment %}
                     <div class="row">
                       <div class="col-sm-3">
-                        <a href="{% url 'deliverd_items' i.id %}"><p class="mb-0">See Product Details</p></a>
+                        <p class="mb-0">Order-ID:</p>
                       </div>
-                      
+                      <div class="col-sm-9">
+                        <a href="{% url 'deliverd_items' i.id %}"><p class="text-muted mb-0">{{i.order_id}}</p></a>
+                      </div>
                       <div class="col-sm-9">
                         {% comment %} {% for j in order_item %}
                         <p class="text-muted mb-0">{{j.product.products.name}}</p>

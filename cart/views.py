@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django.db import models
+from django.utils.crypto import get_random_string
 
 
 
@@ -44,6 +45,7 @@ def add_cart(request, product_id):
         c_items = items.objects.get(user=request.user,products=prod, cart=ct)
         if c_items.quantity < c_items.products.stock:
             c_items.quantity += 1
+            c_items.is_delete=False
         c_items.save()
     except items.DoesNotExist:
         c_items = items.objects.create(user=request.user,products=prod, quantity=1, cart=ct)
@@ -68,6 +70,7 @@ def delete_cart(request, product_id):
     prod = get_object_or_404(product, id=product_id)
     c_items = items.objects.get(user=request.user,products=prod, cart=ct)
     c_items.is_delete=True
+    # c_items.delete()
     c_items.save()
     return redirect('cartdetails')
 
@@ -136,7 +139,7 @@ def order_successful(request):
     #     pass
     
     item = ordered_items.objects.filter(order=obj)
-    # items.objects.get(user=request.user).delete()
+    # items.objects.filter(user=request.user).delete()
     amt=0
     for i in item:
         amt=i.amount
@@ -186,7 +189,8 @@ def all_address(request, amount=0, total=0):
 
         # pr=product.objects.get(id=ct_items_id)
         # print("product_instance=",product_instance)
-        order = orders(username=user, name=name,number=number,landmark=landmark,city=city,address_type=address_type, delivery_date=dt)
+        order_id=get_random_string(10, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+        order = orders(username=user, name=name,number=number,landmark=landmark,city=city,address_type=address_type,order_id=order_id,delivery_date=dt)
         order.save()
         ct = cartlist.objects.get(cart_id=c_id(request))
         ct_items = items.objects.filter(cart=ct, active=True,is_delete=False)
@@ -199,7 +203,7 @@ def all_address(request, amount=0, total=0):
             item = items.objects.get(id=i.id)
             order_item = ordered_items(order=order, product=item, quantity=i.quantity, price=i.products.price,amount=amount)
             order_item.save()
-        return render(request, 'payment.html', {'order_item':order_item})
+        return render(request, 'payment.html', {'order_item':order_item,"total":total})
     else:
         addresses = del_details.objects.filter(username=request.user)
         return render(request, 'all_address.html', {'address': addresses})

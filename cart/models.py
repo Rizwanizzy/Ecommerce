@@ -49,6 +49,7 @@ class orders(models.Model):
     landmark = models.CharField(max_length=255,null=True)
     city = models.CharField(max_length=255,null=True)
     address_type = models.CharField(max_length=255,null=True)
+    order_id = models.CharField(max_length=32,null=True)
     delivery_date = models.DateField()
     
 
